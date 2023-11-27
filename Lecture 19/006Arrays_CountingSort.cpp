@@ -15,6 +15,8 @@ int main() {
 
 	memset(freqMap, 0, sizeof(freqMap));
 
+	// 1. build the freqMap - n-steps
+
 	for (int i = 0; i < n; i++) {
 
 		// int x = arr[i];
@@ -30,6 +32,8 @@ int main() {
 
 	// cout << endl;
 
+	// 2. print the sorted arr[] using freqMap - n-steps
+
 	for (int i = 0; i <= k; i++) {
 
 		int y = freqMap[i];
@@ -43,6 +47,10 @@ int main() {
 	}
 
 	cout << endl;
+
+	// total = n+n = 2n steps ~ O(n)
+
+	// space : k+1 ~ O(k) due to freqMap
 
 	return 0;
 }
