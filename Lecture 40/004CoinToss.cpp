@@ -29,7 +29,7 @@ void f(int n, char out[], int i) {
 
 	// 2. ith coin shows tail
 
-	out[i] = 'T';
+	out[i] = 'T'; // backtracing
 	f(n, out, i + 1);
 
 }
