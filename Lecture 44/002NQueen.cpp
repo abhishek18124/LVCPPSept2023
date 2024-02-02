@@ -92,10 +92,14 @@ void f(int n, int* pos, int r) {
 
 int main() {
 
-	int n = 4;
-	int pos[10];
+	// int n = 4;
+	// int pos[10];
 
-	f(n, pos, 0);
+	// f(n, pos, 0);
+	int x;
+	cin >> x;
+
+	cout << "helo";
 
 	return 0;
 }
