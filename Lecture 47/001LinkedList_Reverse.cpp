@@ -4,21 +4,21 @@ using namespace std;
 
 class ListNode {
 
-	public :
+public :
 
-		int val;
-		ListNode* next;
+	int val;
+	ListNode* next;
 
-		ListNode(int val) {
-			this->val = val;
-			this->next = NULL;
-		}
+	ListNode(int val) {
+		this->val = val;
+		this->next = NULL;
+	}
 
 };
 
 
 void insertAtHead(ListNode*& head, int val) {
-	
+
 	ListNode* n = new ListNode(val);
 	n->next = head;
 	head = n;
@@ -28,12 +28,67 @@ void insertAtHead(ListNode*& head, int val) {
 
 void printLinkedList(ListNode* head) {
 
-	while(head != NULL) {
+	while (head != NULL) {
 		cout << head->val << " ";
 		head = head->next;
 	}
 
 	cout << endl;
+
+}
+
+// time : O(n)
+// space: O(1)
+
+ListNode* reverseIterative(ListNode* head) {
+
+	ListNode* prev = NULL;
+	ListNode* cur = head;
+
+	while (cur != NULL) {
+		ListNode* temp = cur->next;
+		cur->next = prev;
+		prev = cur;
+		cur = temp;
+	}
+
+	return prev;
+
+}
+
+// time : O(n)
+// space: O(n) due to the function call stack
+
+ListNode* reverseRecursive(ListNode* head) {
+
+	// base case
+
+	if (head == NULL) {
+		// LinkedList is empty
+		return head;
+	}
+
+	if (head->next == NULL) {
+		// LinkedList has one node
+		return head;
+	}
+
+	// if(head == NULL || head->next == NULL) {
+	// 	return head;
+	// }
+
+	// recursive case
+
+	// LinkedList has >=2 nodes
+
+	// 1. ask your friend to reverse the sublist that starts from the node which comes after the head node
+
+	ListNode* headFromMyFriend = reverseRecursive(head->next);
+
+	head->next->next = head;
+	head->next = NULL;
+
+	return headFromMyFriend;
 
 }
 
@@ -50,7 +105,11 @@ int main() {
 
 	printLinkedList(head);
 
-	// todo ...
+	head = reverseIterative(head);
+
+	printLinkedList(head);
+
+	head = reverseRecursive(head);
 
 	printLinkedList(head);
 

@@ -16,16 +16,16 @@ public:
 };
 
 void insertAtHead(ListNode*& head, int val) {
-	
+
 	ListNode* n = new ListNode(val);
-	n->next = head; 
+	n->next = head;
 	head = n;
 
 }
 
 void printLinkedList(ListNode* head) {
 
-	while(head) { // head != NULL
+	while (head) { // head != NULL
 		cout << head->val << " ";
 		head = head->next;
 	}
@@ -34,10 +34,37 @@ void printLinkedList(ListNode* head) {
 
 }
 
+// time : n/2 steps ~ O(n)
+// space: O(1)
+
+ListNode* computeMidPoint(ListNode* head) {
+
+	if (head == NULL) {
+		// LinkedList is empty
+		return NULL;
+	}
+
+	// ListNode* slow = head;
+	// ListNode* fast = head->next;
+
+	ListNode* slow = head;
+	ListNode* fast = head;
+
+	while (fast != NULL and fast->next != NULL) {
+		slow = slow->next;
+		fast = fast->next->next;
+	}
+
+	// slow is pointing to the midPoint of the LinkedList i.e. slow pointer has the address of the midPoint node
+	return slow;
+
+}
+
 int main() {
 
 	ListNode* head = NULL;
 
+	insertAtHead(head, 60);
 	insertAtHead(head, 50);
 	insertAtHead(head, 40);
 	insertAtHead(head, 30);
@@ -46,7 +73,13 @@ int main() {
 
 	printLinkedList(head);
 
-	// todo ...
-	
+	ListNode* midPoint = computeMidPoint(head);
+
+	if (midPoint != NULL) {
+		cout << midPoint->val << endl;
+	} else {
+		cout << "LinkedList is empty" << endl;
+	}
+
 	return 0;
 }

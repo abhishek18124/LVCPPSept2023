@@ -18,26 +18,71 @@ public:
 void insertAtHead(ListNode*& head, int val) {
 
 	ListNode* n = new ListNode(val);
-	n->next = head; 
+	n->next = head;
 	head = n;
 
 }
 
 void printLinkedList(ListNode* head) {
-	
-	while(head) { 
+
+	while (head) {
 		cout << head->val << " ";
 		head = head->next;
 	}
-	
+
 	cout << endl;
 
 }
+
+// time : O(n)
+// space: O(n/k) due to the function call stack
+
+ListNode* kReverse(ListNode* head, int k) {
+
+	// base case
+
+	if (head == NULL) {
+		// LinkedList is empty
+		return head;
+	}
+
+	// recursive case
+
+	// 1. reverse the 1st k nodes of the given LinkedList
+
+	ListNode* prev = NULL;
+	ListNode* cur = head;
+
+	int i = 1;
+
+	while (cur != NULL and i <= k) {
+
+		ListNode* temp = cur->next;
+		cur->next = prev;
+		prev = cur;
+		cur = temp;
+
+		i++;
+	}
+
+	// 2. ask your friend to k-Reverse the remaining subList
+
+	// ListNode* headFromMyFriend = kReverse(cur, k);
+	// head->next = headFromMyFriend;
+
+	head->next = kReverse(cur, k);
+
+	return prev;
+
+}
+
 
 int main() {
 
 	ListNode* head = NULL;
 
+	insertAtHead(head, 80);
+	insertAtHead(head, 70);
 	insertAtHead(head, 60);
 	insertAtHead(head, 50);
 	insertAtHead(head, 40);
@@ -47,9 +92,9 @@ int main() {
 
 	printLinkedList(head);
 
-	int k = 2;
+	int k = 3;
 
-	// todo ...
+	head = kReverse(head, k);
 
 	printLinkedList(head);
 

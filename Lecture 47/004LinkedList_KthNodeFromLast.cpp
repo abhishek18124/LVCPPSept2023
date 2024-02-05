@@ -18,15 +18,15 @@ public:
 void insertAtHead(ListNode*& head, int val) {
 
 	ListNode* n = new ListNode(val);
-	n->next = head; 
+	n->next = head;
 	head = n;
 
 }
 
 
 void printLinkedList(ListNode* head) {
-	
-	while(head) { // head != NULL
+
+	while (head) { // head != NULL
 		cout << head->val << " ";
 		head = head->next;
 	}
@@ -34,12 +34,35 @@ void printLinkedList(ListNode* head) {
 	cout << endl;
 }
 
+// time : n steps ~ O(n)
+// space: O(1)
+
+ListNode* findkthLastNode(ListNode* head, int k) {
+
+	// 1. move the fast pointer k steps forward
+
+	ListNode* fast = head;
+
+	while (k--) {
+		fast = fast->next;
+	}
+
+	ListNode* slow = head;
+
+	while (fast != NULL) {
+		slow = slow->next;
+		fast = fast->next;
+	}
+
+	// slow pointer is pointing to the kth last node of the LinkedList
+	return slow;
+
+}
+
 int main() {
 
 	ListNode* head = NULL;
 
-	insertAtHead(head, 70);
-	insertAtHead(head, 60);
 	insertAtHead(head, 50);
 	insertAtHead(head, 40);
 	insertAtHead(head, 30);
@@ -48,9 +71,10 @@ int main() {
 
 	printLinkedList(head);
 
-	int k = 2;
+	int k = 3; // assume k <= n
 
-	// todo ...
+	ListNode* kthLastNode = findkthLastNode(head, k);
+	cout << kthLastNode->val << endl;
 
 	return 0;
 }

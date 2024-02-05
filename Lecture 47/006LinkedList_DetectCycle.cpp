@@ -18,20 +18,39 @@ public:
 void insertAtHead(ListNode*& head, int val) {
 
 	ListNode* n = new ListNode(val);
-	n->next = head; 
+	n->next = head;
 	head = n;
 
 }
 
 
 void printLinkedList(ListNode* head) {
-	
-	while(head) { // head != NULL
+
+	while (head) { // head != NULL
 		cout << head->val << " ";
 		head = head->next;
 	}
 
 	cout << endl;
+}
+
+bool isCyclePresent(ListNode* head) {
+
+	ListNode* slow = head;
+	ListNode* fast = head;
+
+	while (fast != NULL and fast->next != NULL) {
+		slow = slow->next;
+		fast = fast->next->next;
+		if (slow == fast) {
+			// given LinkedList has a cycle
+			return true;
+		}
+	}
+
+	// given LinkedList has no cycle
+	return false;
+
 }
 
 int main() {
@@ -42,9 +61,9 @@ int main() {
 	head->next->next->next = new ListNode(40);
 	head->next->next->next->next = new ListNode(50);
 	head->next->next->next->next->next = new ListNode(60);
-	head->next->next->next->next->next->next = head->next;
-	
-	// todo ...
-	 	
+	head->next->next->next->next->next->next = head->next->next;
+
+	isCyclePresent(head) ? cout << "cycle found" << endl : cout << "cycle not found" << endl;
+
 	return 0;
 }
