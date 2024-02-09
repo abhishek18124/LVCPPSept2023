@@ -17,12 +17,12 @@ public:
 
 void insertAtHead(ListNode*& head, int val) {
 	ListNode* n = new ListNode(val);
-	n->next = head; 
+	n->next = head;
 	head = n;
 }
 
 void printLinkedList(ListNode* head) {
-	while(head != NULL) {
+	while (head != NULL) {
 		cout << head->val << " ";
 		head = head->next;
 	}
@@ -33,14 +33,32 @@ ListNode* rotateLinkedList(ListNode* head, int k) {
 
 	// 1. form a loop by connecting the tail ListNode of  the
 	//    linkedList with the head ListNode of the linkedList
-	
-	// 2. get hold of the pointer to the new tail ListNode 
+
+	ListNode* tail = head;
+	int n = 1;
+	while (tail->next != NULL) {
+		tail = tail->next;
+		n++;
+	}
+
+	// at this point of time, tail pointer is pointing to the tail node of the LinkedList
+	tail->next = head;
+
+	// 2. get hold of the pointer to the new tail ListNode
 	//    that can be found at the (n-(k%n)-1)th index
+	ListNode* newTail = head;
+	for (int i = 0; i < n - (k % n) - 1; i++) {
+		newTail = newTail->next;
+	}
 
 	// 3. get hold of the pointer to the new head ListNode
+	ListNode* newHead = newTail->next;
 
 	// 4. remove the cycle by updating the next pointer of
 	//    the new tail ListNode to contain the NULL address
+	newTail->next = NULL;
+
+	return newHead;
 
 }
 
@@ -56,7 +74,7 @@ int main() {
 
 	printLinkedList(head);
 
-	int k = 3;
+	int k = 2;
 
 	head = rotateLinkedList(head, k);
 
