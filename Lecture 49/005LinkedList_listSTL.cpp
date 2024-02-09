@@ -1,8 +1,8 @@
 /*
 
-	List - STL implementation of doubly linked list	
+	List - STL implementation of doubly linked list
 
-	How to create a list ? 
+	How to create a list ?
 		> use empty container constructor (default constructor)
 		> use fill constructor
 		> use range constructor
@@ -19,10 +19,10 @@
 	    > use list::size
 	How to check if a list is empty ?
 	    > use list::empty or check if list size is 0
-	How to access element at the head node? 
-	    > use list::front 
-	How to access element at the tail node? 
-	    > use list::back 
+	How to access element at the head node?
+	    > use list::front
+	How to access element at the tail node?
+	    > use list::back
 	How to iterate over elements in a list ?
 	    > use an iterator
 
@@ -41,17 +41,17 @@ int main() {
 
 	cout << "size = " << l1.size() << endl;
 
-	// insert data at the head 
+	// insert data at the head
 
 	l1.push_front(30);
 	l1.push_front(20);
 	l1.push_front(10);
 
-	// insert data at the tail 
+	// insert data at the tail
 
 	l1.push_back(40);
 	l1.push_back(50);
-	
+
 	cout << "size = " << l1.size() << endl;
 
 	// access the element at the head
@@ -62,7 +62,7 @@ int main() {
 
 	// iterate over the list using iterator
 
-	for(auto it = l1.begin(), end = l1.end(); it != end; it++) {
+	for (auto it = l1.begin(), end = l1.end(); it != end; it++) {
 		cout << *it << " ";
 	}
 
@@ -70,42 +70,42 @@ int main() {
 
 	// iterate over the list using for-each loop
 
-	for(int x : l1) {
+	for (int x : l1) {
 		cout << x << " ";
 	}
 
 	cout << endl;
 
-	// remove data at the head 
+	// remove data at the head
 
 	l1.pop_front();
-	
+
 	cout << "size = " << l1.size() << endl;
 
 	// iterate over the foward_list using iterator
 
-	for(auto it = l1.begin(), end = l1.end(); it != end; it++) {
+	for (auto it = l1.begin(), end = l1.end(); it != end; it++) {
 		cout << *it << " ";
 	}
 
 	cout << endl;
 
-	// remove data at the tail 
+	// remove data at the tail
 
 	l1.pop_back();
-	
+
 	cout << "size = " << l1.size() << endl;
 
 	// iterate over the foward_list using iterator
 
-	for(auto it = l1.begin(), end = l1.end(); it != end; it++) {
+	for (auto it = l1.begin(), end = l1.end(); it != end; it++) {
 		cout << *it << " ";
 	}
 
 	cout << endl;
 
 	// clear list
-	
+
 	l1.clear();
 	cout << "size = " << l1.size() << endl;
 
@@ -115,12 +115,12 @@ int main() {
 	// create a list using fill constructor
 
 	list<int> l2(3, 100); // creates a list of size 3 all with values 100
-	
+
 	cout << "size = " << l2.size() << endl;
 
 	// iterate over the list using iterator
 
-	for(auto it = l2.begin(), end = l2.end(); it != end; it++) {
+	for (auto it = l2.begin(), end = l2.end(); it != end; it++) {
 		cout << *it << " ";
 	}
 
@@ -132,7 +132,7 @@ int main() {
 
 	// iterate over the foward_list using iterator
 
-	for(auto it = l3.begin(), end = l3.end(); it != end; it++) {
+	for (auto it = l3.begin(), end = l3.end(); it != end; it++) {
 		cout << *it << " ";
 	}
 
@@ -144,7 +144,7 @@ int main() {
 
 	// iterate over the foward_list using iterator
 
-	for(auto it = l4.begin(), end = l4.end(); it != end; it++) {
+	for (auto it = l4.begin(), end = l4.end(); it != end; it++) {
 		cout << *it << " ";
 	}
 

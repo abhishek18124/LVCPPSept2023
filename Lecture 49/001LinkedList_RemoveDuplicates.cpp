@@ -17,35 +17,63 @@ public:
 
 void insertAtHead(ListNode*& head, int val) {
 	ListNode* n = new ListNode(val);
-	n->next = head; 
+	n->next = head;
 	head = n;
 }
 
 void printLinkedList(ListNode* head) {
-	while(head != NULL) {
+	while (head != NULL) {
 		cout << head->val << " ";
 		head = head->next;
 	}
 	cout << endl;
 }
 
+// time : O(n)
+// space: O(1)
+
 ListNode* removeDuplicates(ListNode* head) {
 
-	// todo...
-	
+	ListNode* prev = head;
+	ListNode* cur = head->next;
+
+	while (cur != NULL) {
+
+		// check if cur node needs to be tracked
+
+		if (cur->val != prev->val) {
+
+			// track the cur node
+
+			prev->next = cur;
+			prev = cur;
+
+		}
+
+		cur = cur->next;
+
+	}
+
+	prev->next = NULL;
+
+	return head;
+
 }
 
 int main() {
 
 	ListNode* head = NULL;
 
-	insertAtHead(head, 5);
-	insertAtHead(head, 4);
-	insertAtHead(head, 4);
-	insertAtHead(head, 3);
-	insertAtHead(head, 2);
-	insertAtHead(head, 2);
-	insertAtHead(head, 1);
+	insertAtHead(head, 40);
+	insertAtHead(head, 40);
+	insertAtHead(head, 40);
+	insertAtHead(head, 30);
+	insertAtHead(head, 30);
+	insertAtHead(head, 20);
+	insertAtHead(head, 20);
+	insertAtHead(head, 10);
+	insertAtHead(head, 10);
+	insertAtHead(head, 10);
 
 	printLinkedList(head);
 
