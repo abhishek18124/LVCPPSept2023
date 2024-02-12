@@ -3,37 +3,43 @@
 
 using namespace std;
 
+template<typename T>
+
 class stack {
 
-	vector<int> v;
+	vector<T> v;
 
 public :
 
-	void push(int data) {
-
+	void push(T data) {
+		v.push_back(data);
 	}
 
 	void pop() {
-
+		if (empty()) {
+			// stack is empty
+			return;
+		}
+		v.pop_back();
 	}
 
 	int size() {
-
+		return v.size();
 	}
 
-	int top() {
-
+	T top() {
+		return v.back(); // v[v.size()-1]
 	}
 
 	bool empty() {
-
+		return v.empty();
 	}
 
 };
 
 int main() {
 
-	stack s;
+	stack<int> s;
 
 	cout << "size : " << s.size() << endl;
 	cout << "isEmpty ? " << s.empty() << endl;

@@ -1,55 +1,44 @@
 #include<iostream>
+#include<list>
 
 using namespace std;
 
+template <typename T>
 class stack {
 
-	int* arr; // pointer to the array that internally represents stack
-	int t;    // to store the array index of the stack top
-	int n;    // to store the maximum stack capacity
+	list<T> dll; // assume the back of the dll to work as the top of the stack
 
 public :
 
-	stack(int n) {
-		arr = new int[n];
-		t = -1;
-		this->n = n;
-	}
-
-	void push(int data) {
-		if (t == n - 1) {
-			// stack is full
-			return;
-		}
-		t++;
-		arr[t] = data;
+	void push(T data) {
+		dll.push_back(data);
 	}
 
 	void pop() {
-		if (t == -1) {
+		if (empty()) {
 			// stack is empty
 			return;
 		}
-		t--;
-	}
-
-	int top() {
-		return arr[t];
-	}
-
-	bool empty() {
-		return t == -1;
+		dll.pop_back();
 	}
 
 	int size() {
-		return t + 1;
+		return dll.size();
+	}
+
+	T top() {
+		return dll.back();
+	}
+
+	bool empty() {
+		return dll.empty();
 	}
 
 };
 
 int main() {
 
-	stack s(5);
+	stack<int> s;
 
 	cout << "size : " << s.size() << endl;
 	cout << "isEmpty ? " << s.empty() << endl;

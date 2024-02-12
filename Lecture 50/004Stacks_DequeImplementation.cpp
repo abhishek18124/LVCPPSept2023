@@ -6,28 +6,32 @@ using namespace std;
 template <typename T>
 class stack {
 
-	deque<T> d;
+	deque<T> d; // assume the front of the deque to work as the top of the stack
 
 public :
 
 	void push(T data) {
-
+		d.push_front(data);
 	}
 
 	void pop() {
-
+		if (empty()) {
+			// stack is empty
+			return;
+		}
+		d.pop_front();
 	}
 
 	int size() {
-
+		return d.size();
 	}
 
 	T top() {
-
+		return d.front(); // d[0]
 	}
 
 	bool empty() {
-
+		return d.empty();
 	}
 
 };
