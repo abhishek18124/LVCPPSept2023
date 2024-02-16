@@ -1,68 +1,43 @@
 #include<iostream>
+#include<deque>
 
 using namespace std;
 
-template<typename T>
+template <typename T>
 class queue {
+	deque<T> d;
 
-	T* arr; // pointer to array that internally represents queue
-
-	int f;  // to store the array index at which we have performed
-	// the last pop operation
-
-	int r;  // to store the array index at which we have performed
-	// the last push operation
-
-	int n;  // to store the maximum queue capacity
-
-	int count; // to store the queue size
-
-public :
-
-	queue(int n) {
-		arr = new T[n];
-		f = -1;
-		r = -1;
-		count = 0;
-		this->n = n;
-	}
+public:
 
 	void push(T val) {
-		if (r == n - 1) {
-			// queue is full
-			return;
-		}
-		r = r + 1;
-		arr[r] = val;
-		count++;
+		d.push_back(val);
 	}
 
 	void pop() {
-		if (f == r) {
+		if (empty()) {
 			// queue is empty
 			return;
 		}
-		f = f + 1;
-		count--;
+		d.pop_front();
 	}
 
 	T front() {
-		return arr[f + 1];
+		return d.front();
 	}
 
 	bool empty() {
-		return f == r; // count == 0
+		return d.empty();
 	}
 
 	int size() {
-		return count; // r-f
+		return d.size();
 	}
 
 };
 
 int main() {
 
-	queue<int> q(5);
+	queue<int> q;
 
 	cout << "size : " << q.size() << endl;
 	q.empty() ? cout << "Queue is empty!" << endl :
@@ -88,6 +63,7 @@ int main() {
 	q.pop();
 	q.empty() ? cout << "Queue is empty!" << endl :
 	                 cout << "Queue is not empty!" << endl;
+
 
 	return 0;
 }
