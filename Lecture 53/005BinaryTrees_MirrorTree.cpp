@@ -1,11 +1,11 @@
 /*
 
-given the pre-order traversal of a binary tree, design a recursive 
+given the pre-order traversal of a binary tree, design a recursive
 algorithm to mirror it.
 
 Example : Input  : 10 20 40 -1 -1 50 70 -1 -1 -1 30 -1 60 -1 -1
           Output : 10 30 60 -1 -1 -1 20 50 -1 70 -1 -1 40 -1 -1
-                  
+
 */
 
 #include<iostream>
@@ -32,7 +32,7 @@ TreeNode* buildTree() {
 
 	// base case
 
-	if(val == -1) {
+	if (val == -1) {
 		// construct an empty tree and return pointer to its root TreeNode
 		return NULL;
 	}
@@ -50,7 +50,7 @@ TreeNode* buildTree() {
 	// 3. ask your friend to construct the rightSubtree from the preOrder traversal of the rightSubtree
 
 	root->right = buildTree();
-	
+
 	return root;
 
 }
@@ -59,7 +59,7 @@ TreeNode* buildTree() {
 void printPreOrder(TreeNode* root) {
 
 	// base case
-	if(!root) { // root == NULL
+	if (!root) { // root == NULL
 		cout << -1 << " ";
 		return;
 	}
@@ -77,10 +77,38 @@ void printPreOrder(TreeNode* root) {
 
 }
 
+// time : O(n)
+
+void mirrorTree(TreeNode* root) {
+
+	// base case
+
+	if (root == NULL) {
+		// tree is empty
+		return;
+	}
+
+	// recursive case
+
+	// 1. recursively, mirror the leftSubtree
+
+	mirrorTree(root->left);
+
+	// 2. recursively, mirror the rightSubtree
+
+	mirrorTree(root->right);
+
+	swap(root->left, root->right); // const op.
+
+
+}
+
 int main() {
 
 	TreeNode* root = buildTree();
-	root = mirrorTree(root);
+
+	mirrorTree(root);
+
 	printPreOrder(root);
 
 	return 0;
