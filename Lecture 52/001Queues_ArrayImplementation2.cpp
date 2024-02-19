@@ -20,11 +20,11 @@ class queue {
 public :
 
 	queue(int n) {
-		arr = new T[n];
-		f = -1;
-		r = -1;
+		arr = new T[n + 1];
+		f = 0;
+		r = 0;
 		count = 0;
-		this->n = n;
+		this->n = n + 1;
 	}
 
 	void push(T val) {

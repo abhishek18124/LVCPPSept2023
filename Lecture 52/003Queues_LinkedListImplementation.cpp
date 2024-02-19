@@ -10,23 +10,26 @@ class queue {
 public:
 
 	void push(T data) {
-		
+		dll.push_back(data);
 	}
 
 	void pop() {
-		
+		if (empty()) {
+			return;
+		}
+		dll.pop_front();
 	}
 
 	T front() {
-		
+		return dll.front();
 	}
 
 	int size() {
-		
+		return dll.size();
 	}
 
 	bool empty() {
-		
+		return dll.empty();
 	}
 
 };
@@ -56,8 +59,8 @@ int main() {
 	cout << "front : " << q.front() << endl;
 
 	q.pop();
-	q.empty() ? cout << "Queue is empty!" << endl:
-	            cout << "Queue is not empty!" << endl;
+	q.empty() ? cout << "Queue is empty!" << endl :
+	                 cout << "Queue is not empty!" << endl;
 
 	return 0;
 }
