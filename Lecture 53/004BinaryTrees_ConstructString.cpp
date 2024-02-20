@@ -21,7 +21,7 @@ TreeNode* buildTree() {
 
 	// base case
 
-	if(val == -1) {
+	if (val == -1) {
 		// construct an empty tree and return pointer to its root TreeNode
 		return NULL;
 	}
@@ -39,8 +39,52 @@ TreeNode* buildTree() {
 	// 3. ask your friend to construct the rightSubtree from the preOrder traversal of the rightSubtree
 
 	root->right = buildTree();
-	
+
 	return root;
+
+}
+
+string helper(TreeNode* root) {
+
+	// base case
+
+	if (root == NULL) {
+
+		// tree is empty
+
+		return "";
+
+	}
+
+	// recursive case
+
+	// 1. ask your friend to find the string repr. of the leftSubtree
+
+	string leftRepr = helper(root->left);
+
+	// 2. ask your friend to find the string repr. of the rightSubtree
+
+	string rightRepr = helper(root->right);
+
+	// 3. build the string repr. of the given tree
+
+	if (root->left != NULL and root->right != NULL) {
+
+		return to_string(root->val) + "(" + leftRepr + ")(" + rightRepr + ")";
+
+	} else if (root->left != NULL) {
+
+		return to_string(root->val) + "(" + leftRepr + ")";
+
+	} else if (root->right != NULL) {
+
+		return to_string(root->val) + "()(" + rightRepr + ")";
+
+	}
+
+	// root->left == NULL and root->right == NULL
+
+	return to_string(root->val);
 
 }
 
@@ -48,7 +92,7 @@ TreeNode* buildTree() {
 int main() {
 
 	TreeNode* root = buildTree();
-	cout << tree2str(root) << endl;
+	cout << helper(root) << endl;
 
 	return 0;
 }

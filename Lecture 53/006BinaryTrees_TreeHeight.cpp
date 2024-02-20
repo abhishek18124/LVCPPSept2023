@@ -1,9 +1,9 @@
 /*
 
-given the pre-order traversal of a binary tree, design a recursive algorithm to 
+given the pre-order traversal of a binary tree, design a recursive algorithm to
 compute its height
-	 
-	  height of a binary tree is equal to the height of the root TreeNode which is 
+
+	  height of a binary tree is equal to the height of the root TreeNode which is
 	  equal to the length of the longest path from the root TreeNode to a leaf TreeNode.
 
 Example : Input  :10 20 40 -1 -1 50 70 -1 -1 -1 30 -1 60 -1 -1
@@ -36,7 +36,7 @@ TreeNode* buildTree() {
 
 	// base case
 
-	if(val == -1) {
+	if (val == -1) {
 		// construct an empty tree and return pointer to its root TreeNode
 		return NULL;
 	}
@@ -54,8 +54,38 @@ TreeNode* buildTree() {
 	// 3. ask your friend to construct the rightSubtree from the preOrder traversal of the rightSubtree
 
 	root->right = buildTree();
-	
+
 	return root;
+
+}
+
+// time : O(n)
+// space due the fn. call stack depends on the height of the tree
+
+// balanced -> height = logn
+// skewed -> height = n
+
+int computeHeight(TreeNode* root) {
+
+	// base case
+
+	if (root == NULL) {
+
+		// tree is empty, what is its height ?
+		return -1;
+	}
+
+	// recursive case
+
+	// 1. recursively, find the height of the leftSubtree
+
+	int x = computeHeight(root->left);
+
+	// 2. recursively, find the height of the rightSubtree
+
+	int y = computeHeight(root->right);
+
+	return 1 + max(x, y); // const op.
 
 }
 
