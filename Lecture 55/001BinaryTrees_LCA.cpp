@@ -19,10 +19,39 @@ public :
 
 };
 
+TreeNode* helper(TreeNode* root, TreeNode* p, TreeNode* q) {
+
+	// base case
+
+	if (root == NULL) {
+		return NULL;
+	}
+
+	if (root->val == p->val || root->val == q->val) {
+		return root;
+	}
+
+	// recursive case
+
+	TreeNode* left = helper(root->left, p, q);
+	TreeNode* right = helper(root->right, p, q);
+
+	if (left != NULL and right != NULL) {
+		return root;
+	} else if (left != NULL) {
+		return left;
+	} else if (right != NULL) {
+		return right;
+	}
+
+	return NULL;
+
+}
+
 
 TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
 
-	// todo ...
+	return helper(root, p, q);
 
 }
 
