@@ -19,71 +19,49 @@ public :
 
 };
 
-class Triple {
-public :
+int numCameras = 0;
 
-	int numCameras;
-	bool isCovered;
-	bool hasCamera;
-
-};
-
-Triple helper(TreeNode* root) {
-
-	Triple t;
+int helper(TreeNode* root) {
 
 	// base case
 
 	if (root == NULL) {
-
-		t.numCameras = 0;
-		t.hasCamera = false;
-		t.isCovered = true;
-
-		return t;
-
+		return 1;
 	}
 
 	// recursive case
 
-	Triple left = helper(root->left);
-	Triple right = helper(root->right);
+	int leftStatus = helper(root->left);
+	int rightStatus = helper(root->right);
 
 	// should you install a camera at the root node ?
 
-	if (!left.isCovered || !right.isCovered) {
+	if (leftStatus == 2 || rightStatus == 2) {
 
-		// install a camera at the root node
+		// install camera at the root node
 
-		t.numCameras = left.numCameras + right.numCameras + 1;
-		t.hasCamera = true;
-		t.isCovered = true;
-
-		return t;
+		numCameras++;
+		return 0;
 
 	}
 
 	// do not install a camera at the root node
 
-	t.numCameras = left.numCameras + right.numCameras;
-	t.hasCamera = false;
-	t.isCovered = left.hasCamera || right.hasCamera ? true : false;
+	return leftStatus == 0 || rightStatus == 0 ? 1 : 2;
 
-	return t;
 
 }
 
 int minCameraCover(TreeNode* root) {
 
-	Triple t = helper(root);
+	int status = helper(root);
 
-	if (!t.isCovered) {
-		// you've install a camera at the root node
-		return 1 + t.numCameras;
+	if (status == 2) {
+		// root is not yet covered, install a camera at the root node
+		numCameras++;
 	}
 
-	// you don't need to install camera at the root node
-	return t.numCameras;
+	return numCameras;
 
 }
 

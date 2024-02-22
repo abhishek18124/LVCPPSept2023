@@ -48,12 +48,79 @@ TreeNode* buildTree() {
 
 }
 
+void rightViewBFS(TreeNode* root) {
+
+	queue<TreeNode*> q;
+	q.push(root);
+	q.push(NULL);
+
+	while (!q.empty()) {
+		TreeNode* front = q.front();
+		q.pop();
+
+		if (front == NULL) {
+			// last level has been processed
+			if (!q.empty()) {
+				// next level has been visited
+				q.push(NULL);
+			}
+
+		} else {
+
+			if (q.front() == NULL) {
+
+				// front node is the rightmost node of the current level
+
+				cout << front->val << " ";
+
+			}
+
+			if (front->left != NULL) {
+				q.push(front->left);
+			}
+
+			if (front->right != NULL) {
+				q.push(front->right);
+			}
+
+		}
+	}
+
+}
+
+int maxLevel = -1;
+
+void rightViewDFS(TreeNode* root, int level) {
+
+	// base case
+
+	if (root == NULL) {
+		return;
+	}
+
+	// recursive case
+
+	if (level > maxLevel) {
+		// root node is the rightmost node of the current level
+		cout << root->val << " ";
+		maxLevel = level;
+	}
+
+	rightViewDFS(root->right, level + 1);
+	rightViewDFS(root->left, level + 1);
+
+}
+
 int main() {
 
 	TreeNode* root = NULL;
 	root = buildTree();
 
-	// todo ...
+	rightViewBFS(root);
+
+	cout << endl;
+
+	rightViewDFS(root, 0);
 
 	return 0;
 }

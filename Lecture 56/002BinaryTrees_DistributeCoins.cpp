@@ -21,15 +21,29 @@ public :
 
 int numMoves = 0; // to track the minimum no. of moves required to distribute the coins
 
-int distributeCoins(TreeNode* root) {
+int helper(TreeNode* root) {
 
 	// base case
 
-	// todo ...
+	if (root == NULL) {
+		return 0;
+	}
 
 	// recursive case
 
-	// todo ...
+	int leftReq = helper(root->left);
+	int rightReq = helper(root->right);
+
+	numMoves += abs(leftReq) + abs(rightReq);
+
+	return (leftReq + rightReq + 1) - root->val;
+
+}
+
+int distributeCoins(TreeNode* root) {
+
+	int treeReq = helper(root); // treeReq is 100% zero
+	return numMoves;
 
 }
 
@@ -37,23 +51,23 @@ int main() {
 
 	TreeNode* root = NULL;
 
-	root = new TreeNode(3);
+	// root = new TreeNode(3);
 
-	root->left = new TreeNode(0);
-	root->right = new TreeNode(0);
-
-	distributeCoins(root);
-
-	cout << numMoves << endl;
-
-	// root = new TreeNode(0);
-
-	// root->left = new TreeNode(3);
+	// root->left = new TreeNode(0);
 	// root->right = new TreeNode(0);
 
 	// distributeCoins(root);
 
 	// cout << numMoves << endl;
+
+	root = new TreeNode(0);
+
+	root->left = new TreeNode(3);
+	root->right = new TreeNode(0);
+
+	distributeCoins(root);
+
+	cout << numMoves << endl;
 
 	return 0;
 }
