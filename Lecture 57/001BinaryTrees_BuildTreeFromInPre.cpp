@@ -1,9 +1,9 @@
 /*
 
-given the in-order & pre-order traversal of a binary tree, design an algorithm to construct 
+given the in-order & pre-order traversal of a binary tree, design an algorithm to construct
 a binary tree from it.
 
-Example 
+Example
 	Input: pre[] = {10, 20, 40, 50, 70, 30, 60}
 	       in[]  = {40, 20, 70, 50, 10, 30, 60}
 
@@ -30,24 +30,24 @@ void printLevelOrder(TreeNode* root) {
 	queue<TreeNode*> q;
 	q.push(root);
 	q.push(NULL);
-	while(!q.empty()) {
+	while (!q.empty()) {
 		TreeNode* front = q.front(); q.pop();
-		if(front == NULL) {
+		if (front == NULL) {
 			cout << endl;
-			if(!q.empty()) {
+			if (!q.empty()) {
 				q.push(NULL);
 			}
 		} else {
 			cout << front->val << " ";
-			if(front->left) q.push(front->left);
-			if(front->right)q.push(front->right);
+			if (front->left) q.push(front->left);
+			if (front->right)q.push(front->right);
 		}
 	}
 
 }
 
 void printPreOrder(TreeNode* root) {
-	if(root == NULL) {
+	if (root == NULL) {
 		// root represents an empty tree
 		return;
 	}
@@ -59,7 +59,7 @@ void printPreOrder(TreeNode* root) {
 
 
 void printInOrder(TreeNode* root) {
-	if(root == NULL) {
+	if (root == NULL) {
 		// root represents an empty tree
 		return;
 	}
@@ -69,6 +69,39 @@ void printInOrder(TreeNode* root) {
 	printInOrder(root->right);
 }
 
+int i = 0; // to iterate over the preOrder
+
+TreeNode* buildTree(int pre[], int in[], int s, int e) {
+
+	if (s > e) {
+		return NULL;
+	}
+
+	int x = pre[i];
+	i++;
+
+	TreeNode* root = new TreeNode(x);
+
+	int k;
+	for (int j = s; j <= e; j++) {
+		if (in[j] == x) {
+			k = j;
+			break;
+		}
+	}
+
+	// recursively, build the leftSubtree of 'x' using its inOrder s to k-1
+
+	root->left = buildTree(pre, in, s, k - 1);
+
+	// recursively, build the rightSubtree of 'x' using its inOrder k+1 to e
+
+	root->right = buildTree(pre, in, k + 1, e);
+
+	return root;
+
+}
+
 
 int main() {
 
@@ -76,15 +109,15 @@ int main() {
 	int in[]  = {40, 20, 70, 50, 10, 30, 60};
 	int n = sizeof(in) / sizeof(int);
 
-	TreeNode* root = buildTree(pre, in, 0, n-1);
-	
-	printPreOrder(root); 
+	TreeNode* root = buildTree(pre, in, 0, n - 1);
+
+	printPreOrder(root);
 	cout << endl;
-	
-	printInOrder(root); 
+
+	printInOrder(root);
 	cout << endl;
-	
-	printLevelOrder(root); 
+
+	printLevelOrder(root);
 	cout << endl;
 
 	return 0;

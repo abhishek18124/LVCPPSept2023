@@ -26,19 +26,42 @@ void printLevelOrder(TreeNode* root) {
 	q.push(root);
 	q.push(NULL);
 
-	while(!q.empty()) {
+	while (!q.empty()) {
 		TreeNode* front = q.front(); q.pop();
-		if(front == NULL) {
+		if (front == NULL) {
 			cout << endl;
-			if(!q.empty()) {
+			if (!q.empty()) {
 				q.push(NULL);
 			}
 		} else {
 			cout << front->val << " ";
-			if(front->left) q.push(front->left);
-			if(front->right)q.push(front->right);
+			if (front->left) q.push(front->left);
+			if (front->right)q.push(front->right);
 		}
 	}
+}
+
+TreeNode* buildBBST(int A[], int s, int e) {
+
+	// base case
+
+	if (s > e) {
+		return NULL;
+	}
+
+	// recursive case
+
+	int m = s + (e - s) / 2;
+	TreeNode* root = new TreeNode(A[m]);
+
+	// recursively, build a balanced leftSubtree using the sorted subarray A[s...m-1]
+	root->left = buildBBST(A, s, m - 1);
+
+	// recursively, build a balanced rightSubtree using the sorted subarray A[m+1...e]
+	root->right = buildBBST(A, m + 1, e);
+
+	return root;
+
 }
 
 
@@ -47,11 +70,11 @@ int main() {
 	int A[] = {3, 5, 7, 10, 13, 15, 17};
 	int n = sizeof(A) / sizeof(int);
 
-	TreeNode* root = buildBBST(A, 0, n-1);
+	TreeNode* root = buildBBST(A, 0, n - 1);
 
 	printLevelOrder(root);
 
 	cout << endl;
-	
+
 	return 0;
 }

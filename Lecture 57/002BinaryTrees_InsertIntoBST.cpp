@@ -23,7 +23,7 @@ public:
 
 
 void printInOrder(TreeNode* root) {
-	if(root == NULL) {
+	if (root == NULL) {
 		return;
 	}
 
@@ -37,19 +37,49 @@ void printLevelOrder(TreeNode* root) {
 	q.push(root);
 	q.push(NULL);
 
-	while(!q.empty()) {
+	while (!q.empty()) {
 		TreeNode* front = q.front(); q.pop();
-		if(front == NULL) {
+		if (front == NULL) {
 			cout << endl;
-			if(!q.empty()) {
+			if (!q.empty()) {
 				q.push(NULL);
 			}
 		} else {
 			cout << front->val << " ";
-			if(front->left) q.push(front->left);
-			if(front->right)q.push(front->right);
+			if (front->left) q.push(front->left);
+			if (front->right)q.push(front->right);
 		}
 	}
+}
+
+// time ~ O(height)
+
+TreeNode* insert(TreeNode* root, int key) {
+
+	// base case
+
+	if (root == NULL) {
+
+		return new TreeNode(key);
+
+	}
+
+	// recursive case
+
+	if (key < root->val) {
+
+		// recursively, insert the node with the given key in the leftSubtree which is also a BST
+		root->left = insert(root->left, key);
+
+	} else {
+
+		// recursively, insert the node with the given key in the rightSubtree which is also a BST
+		root->right = insert(root->right, key);
+
+	}
+
+	return root;
+
 }
 
 int main() {
@@ -57,7 +87,7 @@ int main() {
 	TreeNode* root = NULL;
 
 	root = insert(root, 10);
-	
+
 	root = insert(root, 5);
 	root = insert(root, 3);
 	root = insert(root, 7);
@@ -65,12 +95,12 @@ int main() {
 	root = insert(root, 15);
 	root = insert(root, 13);
 	root = insert(root, 17);
-	
+
 	printLevelOrder(root);
 
 	cout << endl;
 
-	printInOrder(root);
+	printInOrder(root); // inOrder of a BST is always sorted
 
 	cout << endl;
 
