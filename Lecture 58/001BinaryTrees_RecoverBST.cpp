@@ -1,4 +1,5 @@
 #include<iostream>
+#include<vector>
 
 using namespace std;
 
@@ -42,9 +43,51 @@ void printInOrder(TreeNode* root) {
 
 }
 
+void findInOrder(TreeNode* root, vector<TreeNode*>& inOrder) {
+
+    // base case
+
+    if (root == NULL) {
+        return;
+    }
+
+    // recursive case
+
+    findInOrder(root->left, inOrder);
+
+    inOrder.push_back(root);
+
+    findInOrder(root->right, inOrder);
+
+}
+
 void recoverTree(TreeNode* root) {
 
-    // todo ...
+    vector<TreeNode*> inOrder;
+    findInOrder(root, inOrder);
+
+    TreeNode* first = NULL;
+    TreeNode* second = NULL;
+
+    for (int i = 1; i < inOrder.size(); i++) {
+
+        if (inOrder[i]->val < inOrder[i - 1]->val) {
+
+            // you've found a violation
+
+            if (first == NULL) {
+
+                first = inOrder[i - 1];
+
+            }
+
+            second = inOrder[i];
+
+        }
+
+    }
+
+    swap(first->val, second->val);
 
 }
 
@@ -59,7 +102,22 @@ int main() {
     root->right = new TreeNode(4);
     root->right->left = new TreeNode(2);
 
-    // recoverTree(root);
+    // TreeNode* root = new TreeNode(7);
+
+    // root->left = new TreeNode(3);
+    // root->left->left = new TreeNode(1);
+    // root->left->left->left = new TreeNode(0);
+    // root->left->left->right = new TreeNode(2);
+    // root->left->right = new TreeNode(5);
+    // root->left->right->left = new TreeNode(9);
+    // root->left->right->right = new TreeNode(6);
+
+    // root->right = new TreeNode(8);
+    // root->right->right = new TreeNode(10);
+    // root->right->right->left = new TreeNode(4);
+    // root->right->right->right = new TreeNode(15);
+
+    recoverTree(root);
 
     printInOrder(root);
 
