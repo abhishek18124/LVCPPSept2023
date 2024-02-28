@@ -13,6 +13,7 @@ using namespace std;
 int main() {
 
 	priority_queue<int> m; // maxHeap by default
+	// priority_queue<int, vector<int>, less<int>> m; // maxHeap by default
 
 	m.push(1);
 	m.push(3);
@@ -23,10 +24,10 @@ int main() {
 	m.push(6);
 	m.push(9);
 	m.push(8);
-	
+
 	cout << m.size() << endl;
 
-	while(!m.empty()) {
+	while (!m.empty()) {
 		cout << m.top() << " ";
 		m.pop();
 	}
