@@ -229,44 +229,44 @@ public :
 		}
 		cout << endl;
 	}
+
+	int& operator[](int K) {
+		node* temp = find(K);
+		if (temp == NULL) {
+			int garbage; // uninitialized
+			insert(K, garbage);
+			temp = find(K);
+		}
+		return temp->V;
+	}
 };
 
 int main() {
 
 	HashMap hm;
 
-	hm.insert(0, 0);
+	hm.insert(10, 100);
 	hm.insert(1, 1);
 	hm.insert(6, 36);
 
 	hm.printHashMap();
 
-	int key = 0;
+	cout << hm[6] << endl; // expected output = 36 // hm.operator[](6)
 
-	node* temp = hm.find(key);
+	cout << hm[1] << endl; // expected output = 1 // hm.operator[](1)
 
-	if (temp != NULL) {
-		// key exists in the hashMap
-		cout << temp->V << endl;
-	} else {
-		cout << key << " not found" << endl;
-	}
+	cout << hm[10] << endl; // expected output = 100 // hm.operator[](10)
 
-	hm.erase(key);
+	hm[12] = 144; // what do you expect from this line of code ? insert a key-value pair (12, 144) into the hashMap
+	// // hm.operator[](12) = 144;
 
-	temp = hm.find(key);
+	hm[4] = 16; // what do you expect from this line of code ? insert a key-value pair  (4, 16) into the hashMap
+	// // hm.operator[](4) = 16;
 
-	if (temp != NULL) {
-		// key exists in the hashMap
-		cout << temp->V << endl;
-	} else {
-		cout << key << " not found" << endl;
-	}
+	hm[6] = 0; // what do you expect from this line of code ? modify the value of (6, 36) to (6, 0)
+	// hm.operator[](6) = 0
 
-	hm.printHashMap();
-
-	hm.insert(11, 121);
-	hm.insert(10, 100);
+	cout << hm[6] << endl;
 
 	hm.printHashMap();
 
