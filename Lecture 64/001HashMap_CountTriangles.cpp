@@ -46,9 +46,53 @@ int main() {
 		Point(4, 2)
 	};
 
+	unordered_map<int, int> xFreqMap;
+	unordered_map<int, int> yFreqMap;
+
+	for (Point p : points) {
+
+		xFreqMap[p.x]++; // const. op
+		yFreqMap[p.y]++; // const. op
+
+	}
+
 	int cnt = 0;
 
-	// todo ...
+	// time : O(n^2)
+
+	// time : O(n) using xFreqMap and yFreqMap space : O(n) due to xFreqMap & yFreqMap
+
+	for (Point p : points) {
+
+		// with 'p' as pivot, count the no. of right angled triangles around it
+
+		// 1. find the no. of points in the 2D plane whose x-coor matches p.x
+
+		// 2. find the no. of points in the 2D plane whose y-coor matches p.y
+
+		// int a = 0; // tracks the no. of points in the 2D plane whoes x-coor matches p.x
+		// int b = 0; // tracks the no. of points in the 2D plane whoes y-coor matches p.y
+
+		// for (Point pp : points) {
+
+		// 	if (pp.x == p.x) {
+		// 		a++;
+		// 	}
+
+		// 	if (pp.y == p.y) {
+		// 		b++;
+		// 	}
+
+		// }
+
+		int a = xFreqMap[p.x]; // const op.
+		int b = yFreqMap[p.y]; // const op.
+
+		cnt += (a - 1) * (b - 1);
+
+	}
+
+	cout << cnt << endl;
 
 	return 0;
 }

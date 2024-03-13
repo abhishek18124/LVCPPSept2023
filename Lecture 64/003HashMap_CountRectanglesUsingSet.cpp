@@ -54,6 +54,7 @@ int main() {
 	set<Point, PointCompare> s(points.begin(), points.end());
 
 	int cnt = 0;
+
 	for (int i = 0; i < n - 1; i++) {
 		Point p1 = points[i];
 		for (int j = i + 1; j < n; j++) {

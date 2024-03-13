@@ -25,6 +25,19 @@ public:
 		this->y = y;
 	}
 
+	bool operator==(Point p) const {
+		return this->x == p.x and this->y == p.y;
+	}
+
+};
+
+class PointHash {
+public:
+	size_t operator()(Point p) const {
+
+		return hash<int>()(p.x) ^ hash<int>()(p.y);
+
+	}
 };
 
 int main() {
@@ -40,7 +53,7 @@ int main() {
 
 	int n = points.size();
 
-	unordered_set<Point> s(points.begin(), points.end());
+	unordered_set<Point, PointHash> s(points.begin(), points.end()); // n.const ~ O(n)
 
 	int cnt = 0;
 
@@ -52,7 +65,7 @@ int main() {
 				Point p3 = Point(p2.x, p1.y);
 				Point p4 = Point(p1.x, p2.y);
 				// check whether points 'p3' and 'p4' are present in the 2D plane or not
-				if (s.find(p3) != s.end() & s.find(p4) != s.end()) {
+				if (s.find(p3) != s.end() && s.find(p4) != s.end()) {
 					cnt++;
 				}
 			}
