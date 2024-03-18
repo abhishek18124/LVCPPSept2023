@@ -11,21 +11,48 @@ int main() {
 	int i = 0; // to store the start of the window
 	int j = 0; // to store the end of the window
 
-	int sum = 0; // to store the window sum
-	
-	int max_len = 0; // to track the length of the longest
-	                 // window which has a sum equals to k 
+	int w_sum = 0; // to store the window sum
 
-	while(j < n) {
+	int max_len = 0; // to track the length of the longest
+	// window which has a sum equals to k
+
+	// time : O(n)
+
+	while (j < n) {
 
 		// expand the window
 
+		w_sum += arr[j];
+
 		// check for the violation of the window property
-		
+
+		if (w_sum > k) {
+
+			// start shrinking the window
+
+			while (w_sum > k) {
+
+				w_sum -= arr[i];
+				i++;
+
+			}
+
+		}
+
 		// check for the validity of the window, and update the answer
 
+		if (w_sum == k) {
+
+			// you've found a valid window
+
+			max_len = max(max_len, j - i + 1);
+
+		}
+
 		// continue expansion of the window
-		
+
+		j++;
+
 	}
 
 	cout << max_len << endl;

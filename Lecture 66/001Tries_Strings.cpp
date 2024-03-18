@@ -16,35 +16,60 @@ using namespace std;
 
 class node {
 
-	public :
+public :
 
-		char ch;
-		bool terminal;
-		unordered_map<char, node*> childMap;
+	char ch;
+	bool terminal;
+	unordered_map<char, node*> childMap;
 
-		node(char ch) {
-			this->ch = ch;
-			this->terminal = false;
-		}
+	node(char ch) {
+		this->ch = ch;
+		this->terminal = false;
+	}
 
 };
 
 class trie {
 	node* root;
 
-	public :
+public :
 
-		trie() {
-			root = new node('\0');
-		}
+	trie() {
+		root = new node('#');
+	}
 
-		void insert(string str) {
-			// todo ...
-		}
+	// time : O(len(str))
 
-		bool search(string str) {
-			// todo ...
+	void insert(string str) {
+
+		node* cur = root;
+		for (char ch : str) {
+			if (cur->childMap.find(ch) == cur->childMap.end()) {
+				// cur node does not have a child node whose value is equal to ch
+				node* n = new node(ch);
+				cur->childMap[ch] = n;
+			}
+			cur = cur->childMap[ch];
 		}
+		cur->terminal = true;
+
+	}
+
+	// time : O(len(str))
+
+	bool search(string str) {
+
+		node* cur = root;
+		for (char ch : str) {
+			if (cur->childMap.find(ch) == cur->childMap.end()) {
+				// cur node does not have a child node whose value is equal to ch
+				return false;
+			}
+			cur = cur->childMap[ch];
+		}
+		return cur->terminal;
+
+	}
 };
 
 int main() {
@@ -52,18 +77,18 @@ int main() {
 	string words[] = {"code", "coder", "coding", "block", "blocks", "news"};
 
 	trie t;
-	for(string word : words) {
+	for (string word : words) {
 		t.insert(word);
 	}
 
-    string queries[] = {"code", "coding", "blocked", "block", "news", "new"};
+	string queries[] = {"code", "coding", "blocked", "block", "news", "new"};
 
-    for(string query : queries) {
-    	t.search(query) ? cout << query << " is present" << endl :
-    	                  cout << query << " is absent" << endl;
-    }
+	for (string query : queries) {
+		t.search(query) ? cout << query << " is present" << endl :
+		                       cout << query << " is absent" << endl;
+	}
 
-    cout << endl;
+	cout << endl;
 
 	return 0;
 }
