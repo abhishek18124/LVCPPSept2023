@@ -39,16 +39,67 @@ int maxProfit(int n, vector<int> p) {
 
 	// compute the max. profit given a rod of length n
 
-	// todo ...
+	// decide the size of the next cut
+
+	int maxSoFar = INT_MIN;
+
+	for (int j = 1; j <= n; j++) {
+
+		// make a cut of size j
+
+		maxSoFar = max(maxSoFar, p[j - 1] + maxProfit(n - j, p));
+
+	}
+
+	return maxSoFar;
+
+}
+
+// time : O(n^2)
+// space : O(n) due dp[]
+
+int maxProfitBottomUp(int n, vector<int> p) {
+
+	vector<int> dp(n + 1);
+
+	dp[0] = 0; // at the 0th index of dp[], we store f(0)
+
+	for (int i = 1; i <= n; i++) {
+
+		// dp[i] = f(i)
+
+		// compute the max. profit given a rod of length i
+
+		// decide the size of the next cut
+
+		int maxSoFar = INT_MIN;
+
+		for (int j = 1; j <= i; j++) {
+
+			// make a cut of size j
+
+			maxSoFar = max(maxSoFar, p[j - 1] + dp[i - j]);
+
+		}
+
+
+		dp[i] = maxSoFar;
+
+	}
+
+	return dp[n]; // at the nth index of dp[], we store f(n)
 
 }
 
 int main() {
 
 	vector<int> p = {1, 5, 8, 9, 10, 17, 17, 20};
+	// vector<int> p = {3,  5,  8,  9, 10, 17, 17, 20};
 	int n = p.size();
 
 	cout << maxProfit(n, p) << endl;
+
+	cout << maxProfitBottomUp(n, p) << endl;
 
 	return 0;
 }
