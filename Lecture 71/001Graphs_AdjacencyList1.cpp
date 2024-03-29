@@ -29,14 +29,28 @@ public:
 
 		// adds an edge b/w vertex u and v
 
-		// todo...
+		arr[u].push_back(v);
+		if (!isDirected) {
+			arr[v].push_back(u);
+		}
+
 	}
 
 	void print() {
 
 		// prints the adjacency list representation of the graph
 
-		// todo...
+		for (int i = 0; i < V; i++) {
+
+			cout << i << " : ";
+			list<int> neighbourList = arr[i];
+			for (int ngb : neighbourList) {
+				cout << ngb << " ";
+			}
+			cout << endl;
+
+		}
+		cout << endl;
 	}
 
 };
