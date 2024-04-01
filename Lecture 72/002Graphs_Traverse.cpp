@@ -21,36 +21,61 @@ class graph {
 	map<T, list<T>> neighbourMap; // to store the graph representation
 	bool isDirected; // to indicate if the graph is directed or not
 
-	public :
+public :
 
-		graph(bool isDirected=false) {
-			this->isDirected = isDirected;
+	graph(bool isDirected = false) {
+		this->isDirected = isDirected;
+	}
+
+	void addEdge(T u, T v) {
+
+		// adds an edge b/w vertex u and v
+
+		neighbourMap[u].push_back(v);
+
+		if (!isDirected) {
+			neighbourMap[v].push_back(u);
 		}
 
-		void addEdge(T u, T v) {
+	}
 
-			// adds an edge b/w vertex u and v
-			
-			neighbourMap[u].push_back(v);
-			
-			if(!isDirected) {
-				neighbourMap[v].push_back(u);
+	void dfsHelper(T s, unordered_set<T>& visited) {
+
+		// mark 's' as visited
+
+		cout << s << " ";
+		visited.insert(s);
+
+		// visited unvisited vertices reachable from 's'
+
+		list<T> neighbourList = neighbourMap[s];
+		for (T neighbour : neighbourList) {
+			if (visited.find(neighbour) == visited.end()) {
+				// neighbour is not yet visited
+				dfsHelper(neighbour, visited);
 			}
-
 		}
 
-		void traverse() {
-			unordered_set<T> visited; // to keep track of visited vertices
-			for(auto vertex : neighbourMap) { 
-				T vertexLabel = vertex.first;
-				if(visited.find(vertexLabel) == visited.end()) {
-					
-					// traverse the component containing the 'vertex'
-					
-					// todo ...	
-				}
+	}
+
+	void traverse() {
+		unordered_set<T> visited; // to keep track of visited vertices
+		int numComponents = 0;
+		for (auto p : neighbourMap) {
+			T vertexLabel = p.first;
+			if (visited.find(vertexLabel) == visited.end()) {
+
+				// traverse the component containing the 'vertexLabel'
+				cout << "dfs(" << vertexLabel << ") : ";
+				dfsHelper(vertexLabel, visited);
+				cout << endl;
+				numComponents++;
+
 			}
 		}
+
+		cout << "numComponents = " << numComponents << endl;
+	}
 
 };
 

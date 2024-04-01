@@ -7,6 +7,7 @@ Given an undirected graph, check if it is bipartite or not.
 #include<iostream>
 #include<unordered_map>
 #include<list>
+#include<queue>
 
 using namespace std;
 
@@ -31,7 +32,7 @@ public :
 		queue<T> q; // to keep track of unexplored & colored vertices
 
 		// color the 'source' vertex
-		colorMap[source] = 1;
+		colorMap[source] = 0;
 		q.push(source);
 
 		while (!q.empty()) {
@@ -40,9 +41,36 @@ public :
 
 			// explore 'front'
 
-			// todo ...
+			list<T> neighbourList = neighbourMap[front];
+
+			for (T neighbour : neighbourList) {
+
+				if (colorMap.find(neighbour) == colorMap.end()) {
+
+					// neighbour is not yet colored / visited
+
+					colorMap[neighbour] = 1 - colorMap[front];
+					q.push(neighbour);
+
+				} else {
+
+					// neighbour is already colored / visited
+
+					if (colorMap[neighbour] == colorMap[front]) {
+
+						// component is not bipartite
+
+						return false;
+
+					}
+
+				}
+
+			}
 
 		}
+
+		// component is bipartite
 
 		return true;
 
@@ -52,8 +80,8 @@ public :
 		bool flag = true; // assume graph is a biparite
 		unordered_map<T, int> colorMap; // to store the mapping between
 		// the vertices and their color
-		for (pair<T, list<T>> vertex : neighbourMap) {
-			T vertexLabel = vertex.first;
+		for (pair<T, list<T>> p : neighbourMap) {
+			T vertexLabel = p.first;
 			if (colorMap.find(vertexLabel) == colorMap.end()) {
 				// 'vertexLabel' not colored, hence not visited
 				if (bfsHelper(vertexLabel, colorMap) == false) {
@@ -77,7 +105,6 @@ int main() {
 	g.addEdge('A', 'C');
 	g.addEdge('B', 'D');
 	g.addEdge('C', 'E');
-	g.addEdge('D', 'E');
 
 	g.isBiPartite() ? cout << "bipartite!" << endl : cout << "not bipartite!" << endl;
 
