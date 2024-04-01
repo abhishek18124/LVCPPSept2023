@@ -7,7 +7,7 @@ Note : each vertex in the graph is generic.
 */
 
 #include<iostream>
-#include<map>
+#include<unordered_map>
 #include<list>
 
 using namespace std;
@@ -15,7 +15,7 @@ using namespace std;
 template <typename T>
 class graph {
 
-	map<T, list<T>> neighbourMap; // to store the graph representation
+	unordered_map<T, list<T>> neighbourMap; // to store the graph representation
 	bool isDirected; // to indicate if the graph is directed or not
 
 public :
@@ -28,7 +28,10 @@ public :
 
 		// adds an edge b/w vertex u and v
 
-		// todo...
+		neighbourMap[u].push_back(v);
+		if (!isDirected) {
+			neighbourMap[v].push_back(u);
+		}
 
 	}
 
@@ -36,7 +39,16 @@ public :
 
 		// prints the adjacency list representation of the graph
 
-		// todo...
+		for (pair<T, list<T>> p : neighbourMap) {
+			T vertexLabel = p.first;
+			list<T> neighbourList = p.second;
+			cout << vertexLabel << " : ";
+			for (T ngb : neighbourList) {
+				cout << ngb << " ";
+			}
+			cout << endl;
+		}
+		cout << endl;
 
 	}
 };
