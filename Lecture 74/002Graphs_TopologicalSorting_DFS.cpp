@@ -9,6 +9,7 @@ Given an directed graph, check if there exists a back-edge or not.
 #include<unordered_set>
 #include<list>
 #include<vector>
+#include<algorithm>
 
 using namespace std;
 
@@ -24,9 +25,65 @@ public :
 		neighbourMap[u].push_back(v);
 	}
 
+	void dfsHelper(T src, unordered_set<T>& visited, vector<T>& ordering) {
+
+		// mark the src vertex as visited
+
+		visited.insert(src);
+
+		list<T> neighbourList = neighbourMap[src];
+
+		for (T neighbour : neighbourList) {
+
+			if (visited.find(neighbour) == visited.end()) {
+
+				// neighbour is not yet visted
+
+				dfsHelper(neighbour, visited, ordering);
+
+			}
+
+		}
+
+		ordering.push_back(src);
+
+	}
+
 	void topologicalSort() {
 
-		// todo ...
+		unordered_map<T, int> inDegMap; // to store the mapping b/w the
+		// vertices and their in-degrees
+
+		// populate the inDegMap
+
+		for (pair<T, list<T>> p : neighbourMap) {
+			list<T> neighbourList = p.second;
+			for (T neighbour : neighbourList) {
+				// account for directed edge from 'vertex' to 'neighbour'
+				inDegMap[neighbour]++;
+			}
+		}
+
+		unordered_set<T> visited;
+		vector<T> ordering;
+
+		for (pair<T, list<T>> p : neighbourMap) {
+			T vertexLabel = p.first;
+			if (inDegMap.find(vertexLabel) == inDegMap.end()) {
+				// vertex with 'vertexLabel' has no dependency
+				dfsHelper(vertexLabel, visited, ordering);
+			}
+		}
+
+		reverse(ordering.begin(), ordering.end());
+
+		for (int i = 0; i < ordering.size(); i++) {
+			cout << ordering[i] << " ";
+		}
+
+		cout << endl;
+
+
 	}
 
 };

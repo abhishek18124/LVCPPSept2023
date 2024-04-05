@@ -17,53 +17,61 @@ class graph {
 
 	unordered_map<T, list<T>> neighbourMap; // to store the graph representation
 
-	public :
+public :
 
-		void addEdge(T u, T v) {
-			// add a directed edge between vertex 'u' and 'v'
-			neighbourMap[u].push_back(v);
+	void addEdge(T u, T v) {
+		// add a directed edge between vertex 'u' and 'v'
+		neighbourMap[u].push_back(v);
+	}
+
+	void topologicalSort() {
+
+		queue<T> q; // to keep track of vertices w/o any dependencies
+		unordered_map<T, int> inDegMap; // to store the mapping b/w the
+		// vertices and their in-degrees
+
+		// populate the inDegMap
+
+		for (pair<T, list<T>> p : neighbourMap) {
+			list<T> neighbourList = p.second;
+			for (T neighbour : neighbourList) {
+				// account for directed edge from 'vertex' to 'neighbour'
+				inDegMap[neighbour]++;
+			}
 		}
 
-		void topologicalSort() {
+		// initialise queue with vertices w/o
+		// any dependency i.e. zero in-degree
 
-			queue<T> q; // to keep track of vertices w/o any dependencies
-			unordered_map<T, int> inDegMap; // to store the mapping b/w the
-			                                // vertices and their in-degrees
+		for (pair<T, list<T>> p : neighbourMap) {
+			T vertexLabel = p.first;
+			if (inDegMap.find(vertexLabel) == inDegMap.end()) {
+				// vertex with 'vertexLabel' has no dependency
+				q.push(vertexLabel);
+			}
+		}
 
-			// populate the inDegMap
-			
-			for(pair<T, list<T>> vertex : neighbourMap) {
-				list<T> neighbourList = vertex.second;
-				for(T neighbour : neighbourList) {
-					// account for directed edge from 'vertex' to 'neighbour'
-					inDegMap[neighbour]++;
+		while (!q.empty()) {
+			T front = q.front();
+			q.pop();
+
+			// explore 'front'
+
+			cout << front << " ";
+
+			list<T> neighbourList = neighbourMap[front];
+			for (T neighbour : neighbourList) {
+				inDegMap[neighbour]--;
+				if (inDegMap[neighbour] == 0) {
+					q.push(neighbour);
 				}
 			}
 
-			// initialise queue with vertices w/o 
-			// any dependency i.e. zero in-degree
-			
-			for(pair<T, list<T>> vertex : neighbourMap) {
-				T vertexLabel = vertex.first;
-				if(inDegMap.find(vertexLabel) == inDegMap.end()) {
-					// vertex with 'vertexLabel' has no dependency
-					q.push(vertexLabel);
-				}
-			}
-
-			while(!q.empty()) {
-				T front = q.front();
-				q.pop();
-
-				// explore 'front'
-
-				// todo ...
-				
-			}
-
-			cout << endl;
-
 		}
+
+		cout << endl;
+
+	}
 
 };
 
@@ -86,7 +94,7 @@ int main() {
 	g.addEdge('F', 'C');
 	g.addEdge('G', 'H');
 	g.addEdge('H', 'F');
-		
+
 	g.topologicalSort();
 
 	return 0;
