@@ -11,6 +11,7 @@ Note : each vertex in the graph is generic.
 #include<list>
 #include<unordered_set>
 #include<queue>
+#include<algorithm>
 
 using namespace std;
 
@@ -44,6 +45,9 @@ public :
 		// their shortest dist from the src vertex
 		distMap[s] = 0;
 
+		map<T, T> parentMap;
+		parentMap[s] = s;
+
 		unordered_set<T> visited; // to keep track of visited vertices
 		queue<T> q; // to keep track of visited & un-explored vertices
 
@@ -57,9 +61,67 @@ public :
 
 			// explore 'front'
 
-			// todo ...
+			list<T> neighbourList = neighbourMap[front];
+
+			for (T neighbour : neighbourList) {
+
+				if (visited.find(neighbour) == visited.end()) {
+
+					// neighbour is not yet visited
+
+					visited.insert(neighbour);
+					q.push(neighbour);
+
+					// since we are visiting neighbour because of front
+
+					// I can say that front is the parent of neighbour in the BFS-tree
+
+					distMap[neighbour] = distMap[front] + 1;
+					parentMap[neighbour] = front;
+
+				}
+
+			}
 
 		}
+
+		for (pair<T, int> p : distMap) {
+			T vertexLabel = p.first;
+			int shortestPathLen = p.second;
+			cout << vertexLabel << " : " << shortestPathLen << endl;
+		}
+
+		cout << "The length of the shortest path from " << s << " to " << d << " = " << distMap[d] << endl;
+
+		for (pair<T, T> p : parentMap) {
+			T vertexLabel = p.first;
+			T parentLabel = p.second;
+			cout << vertexLabel << " : " << parentLabel << endl;
+		}
+
+		cout << endl;
+
+		vector<T> shortestPath; // to track the shortest path from s to d
+
+		T temp = d;
+
+		while (parentMap[temp] != temp) {
+
+			shortestPath.push_back(temp);
+			temp = parentMap[temp];
+
+		}
+
+		shortestPath.push_back(temp);
+
+		reverse(shortestPath.begin(), shortestPath.end());
+
+		for (T v : shortestPath) {
+			cout << v << " ";
+		}
+
+		cout << endl;
+
 	}
 };
 
@@ -80,6 +142,8 @@ int main() {
 	g.addEdge('F', 'H');
 	g.addEdge('G', 'I');
 	g.addEdge('H', 'I');
+
+	g.bfs('A', 'I');
 
 	return 0;
 }
