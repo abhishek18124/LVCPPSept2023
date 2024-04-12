@@ -77,18 +77,21 @@ public :
 		vertexSet.insert(v);
 	}
 
+	// time : O(V.c + E.c)
 	bool isCyclePresent() {
 		disjointSet<T> ds;
 		for (T vertex : vertexSet) {
-			ds.createSet(vertex);
+			ds.createSet(vertex); // const op.
 		}
 		for (edge<T> e : edgeList) {
 			if (ds.findSet(e.u) != ds.findSet(e.v)) {
 				ds.unionSet(e.u, e.v);
 			} else {
+				// uv is a backedge, graph has cycle
 				return true;
 			}
 		}
+		// graph doesn't have a cycle
 		return false;
 	}
 };

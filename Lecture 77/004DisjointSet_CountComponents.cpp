@@ -77,6 +77,8 @@ public :
 		vertexSet.insert(v);
 	}
 
+	// time : O(V.c + E.c) ~ O(V+E)
+
 	int countComponents() {
 		disjointSet<T> ds;
 		for (T vertex : vertexSet) {

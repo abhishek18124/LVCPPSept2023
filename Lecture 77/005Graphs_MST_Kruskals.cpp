@@ -2,6 +2,7 @@
 #include<unordered_map>
 #include<set>
 #include<vector>
+#include<algorithm>
 
 using namespace std;
 
@@ -58,8 +59,18 @@ public :
 	}
 };
 
+// return true if you want e1 to be ordered before e2 otherwise return false
+
 template <typename T>
 bool edgeComparator(edge<T> e1, edge<T> e2) {
+
+	// if(e1.w < e2.w) {
+	// 	// you want e1 to be ordered before e2 since we are sorting in inc. order
+	// 	return true;
+	// }
+
+	// return false;
+
 	return e1.w < e2.w;
 }
 
@@ -78,25 +89,36 @@ public :
 		vertexSet.insert(v);
 	}
 
+	// time : O(V + ElogE)
+
 	vector<edge<T>> kruskal() {
 		disjointSet<T> ds;
 
-		// 1. create a set corresponding to each graph vertex
+		// 1. create a set corresponding to each graph vertex // O(V)
 		for (T vertex : vertexSet) {
 			ds.createSet(vertex);
 		}
 
 		// 2. sort list of edges
-		sort(edgeList.begin(), edgeList.end(), edgeComparator<T>);
+		sort(edgeList.begin(), edgeList.end(), edgeComparator<T>); // O(ElogE)
 
 		// 3. construct MST
 		vector<edge<T>> mst;
-		for (edge<T> e : edgeList) {
+		int mstSum = 0;
+		for (edge<T> e : edgeList) { // O(E)
 			if (ds.findSet(e.u) != ds.findSet(e.v)) {
+				// 'e' is a safe edge
 				ds.unionSet(e.u, e.v);
 				mst.push_back(e);
+				mstSum += e.w;
+				if (mst.size() == vertexSet.size() - 1) {
+					// you've built the minimum spanning tree
+					break;
+				}
 			}
 		}
+
+		cout << mstSum << endl;
 
 		return mst;
 	}
